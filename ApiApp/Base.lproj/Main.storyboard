@@ -36,7 +36,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="BDo-uN-lRt" customClass="ShopCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="BDo-uN-lRt" customClass="ShopCell" customModule="ApiApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="44.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BDo-uN-lRt" id="XBc-6U-ceG">
@@ -53,6 +53,9 @@
                                                     <state key="normal">
                                                         <imageReference key="image" image="star" catalog="system" renderingMode="original"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="tapFavoriteButton:" destination="SIf-Fy-zVN" eventType="touchUpInside" id="YC3-Kp-0Gg"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YJN-ge-hq9">
                                                     <rect key="frame" x="52" y="11.666666666666664" width="283" height="21"/>
@@ -79,6 +82,11 @@
                                                 <constraint firstItem="RdR-Ds-S8M" firstAttribute="leading" secondItem="XBc-6U-ceG" secondAttribute="leading" id="zak-9a-Ftp"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="favoriteButton" destination="GLQ-9c-vVl" id="X7e-Sb-eWW"/>
+                                            <outlet property="logoImageView" destination="RdR-Ds-S8M" id="QcF-3Z-KNV"/>
+                                            <outlet property="shopNameLabel" destination="YJN-ge-hq9" id="5JM-aE-6Yw"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
