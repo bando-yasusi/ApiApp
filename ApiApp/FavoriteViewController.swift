@@ -75,6 +75,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         let url = URL(string: favoriteShop.logoImageURL)!
         cell.logoImageView.af.setImage(withURL: url)
         cell.shopNameLabel.text = favoriteShop.name
+        cell.addressLabel.text = favoriteShop.address
         
         
         return cell
