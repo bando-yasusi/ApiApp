@@ -37,6 +37,7 @@ class ApiViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 let favoriteShop = FavoriteShop()
                 favoriteShop.id = shop.id
                 favoriteShop.name = shop.name
+                favoriteShop.address = shop.address
                 favoriteShop.logoImageURL = shop.logo_image
                 if shop.coupon_urls.sp == "" {
                     favoriteShop.couponURL = shop.coupon_urls.pc
@@ -161,6 +162,7 @@ class ApiViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let url = URL(string: shop.logo_image)!
         cell.logoImageView.af.setImage(withURL: url)
         cell.shopNameLabel.text = shop.name
+        cell.addressLabel.text = shop.address  //住所を追加
         
         // ここから
         let starImageName = shop.isFavorite ? "star.fill" : "star"
@@ -168,11 +170,11 @@ class ApiViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         cell.favoriteButton.setImage(starImage, for: .normal)
         // ここまで追加
         // ここから
-                // 追加データの読み込みが必要か確認
-                if shopArray.count - indexPath.row < 10 {
-                    self.updateShopArray(appendLoad: true)
-                }
-                // ここまで追加
+        // 追加データの読み込みが必要か確認
+        if shopArray.count - indexPath.row < 10 {
+            self.updateShopArray(appendLoad: true)
+        }
+        // ここまで追加
         
         
         return cell
