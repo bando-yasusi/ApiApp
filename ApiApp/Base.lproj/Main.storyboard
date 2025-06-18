@@ -112,7 +112,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="お店が検索できます" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Chj-0x-GJb">
-                                <rect key="frame" x="15" y="59" width="143.33333333333334" height="21"/>
+                                <rect key="frame" x="15" y="59" width="278" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -139,15 +139,19 @@
                         <constraints>
                             <constraint firstItem="Chj-0x-GJb" firstAttribute="leading" secondItem="qRQ-Qw-0QM" secondAttribute="leading" constant="15" id="5sl-sO-3hd"/>
                             <constraint firstItem="6Re-dF-0kK" firstAttribute="leading" secondItem="elo-76-2lY" secondAttribute="trailing" constant="20" id="7H3-Aq-Zbt"/>
+                            <constraint firstItem="4st-CN-kv1" firstAttribute="top" secondItem="6Re-dF-0kK" secondAttribute="bottom" constant="2" id="Bkq-Xb-Q38"/>
                             <constraint firstItem="4st-CN-kv1" firstAttribute="top" secondItem="qRQ-Qw-0QM" secondAttribute="top" constant="60" id="Cjc-KW-P8B"/>
                             <constraint firstItem="qRQ-Qw-0QM" firstAttribute="trailing" secondItem="4st-CN-kv1" secondAttribute="trailing" id="GtC-NY-EoT"/>
                             <constraint firstItem="elo-76-2lY" firstAttribute="top" secondItem="Chj-0x-GJb" secondAttribute="bottom" constant="2" id="Meu-dF-vuu"/>
                             <constraint firstItem="elo-76-2lY" firstAttribute="leading" secondItem="qRQ-Qw-0QM" secondAttribute="leading" constant="10" id="OVv-Yj-RLJ"/>
+                            <constraint firstItem="4st-CN-kv1" firstAttribute="top" secondItem="YNB-mr-qhe" secondAttribute="bottom" constant="2" id="RwM-rx-yJa"/>
                             <constraint firstItem="YNB-mr-qhe" firstAttribute="leading" secondItem="6Re-dF-0kK" secondAttribute="trailing" constant="25" id="UBa-Gl-iMy"/>
                             <constraint firstItem="4st-CN-kv1" firstAttribute="leading" secondItem="qRQ-Qw-0QM" secondAttribute="leading" id="Wxf-ZY-ieZ"/>
                             <constraint firstItem="qRQ-Qw-0QM" firstAttribute="trailing" secondItem="YNB-mr-qhe" secondAttribute="trailing" constant="16" id="Z1g-5e-yNo"/>
+                            <constraint firstItem="4st-CN-kv1" firstAttribute="top" secondItem="elo-76-2lY" secondAttribute="bottom" constant="3" id="d8E-dG-O4S"/>
                             <constraint firstItem="qRQ-Qw-0QM" firstAttribute="bottom" secondItem="4st-CN-kv1" secondAttribute="bottom" id="ddo-I1-9HC"/>
                             <constraint firstItem="6Re-dF-0kK" firstAttribute="top" secondItem="qRQ-Qw-0QM" secondAttribute="top" constant="23" id="e8y-o0-X5m"/>
+                            <constraint firstItem="qRQ-Qw-0QM" firstAttribute="trailing" secondItem="Chj-0x-GJb" secondAttribute="trailing" constant="100" id="nWR-gd-G6M"/>
                             <constraint firstItem="YNB-mr-qhe" firstAttribute="top" secondItem="qRQ-Qw-0QM" secondAttribute="top" constant="23" id="p9S-XQ-gJt"/>
                             <constraint firstItem="lDt-po-Kpf" firstAttribute="centerX" secondItem="dCg-Bm-fe3" secondAttribute="centerX" id="s3X-55-VqK"/>
                             <constraint firstItem="Chj-0x-GJb" firstAttribute="top" secondItem="qRQ-Qw-0QM" secondAttribute="top" id="sOc-hs-B4l"/>
