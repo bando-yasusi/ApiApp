@@ -1,30 +1,34 @@
 import UIKit
-import Alamofire        // 追加
-import AlamofireImage   // 追加
-import RealmSwift     //追加
+import Alamofire
+import AlamofireImage
+import RealmSwift
 import SafariServices
-
-
 
 class ApiViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    let realm = try! Realm()  //追加
+    @IBOutlet weak var keywordTextField: UITextField!
+    @IBAction func tapSearchButton(_ sender: UIButton) {
+        let keyword = keywordTextField.text ?? ""
+        updateShopArray(keyword: keyword, appendLoad: false)
+    }
+    @IBAction func tapResetButton(_ sender: UIButton) {
+        keywordTextField.text = ""
+        updateShopArray(keyword: "", appendLoad: false)
+    }
     
-    var shopArray: [ApiResponse.Result.Shop] = []   // 追加
-    var apiKey: String = ""                         // 追加
+    let realm = try! Realm()
+    var shopArray: [ApiResponse.Result.Shop] = []
+    var apiKey: String = ""
     var isLoading = false
     var isLastLoaded = false
     
-    
     @IBAction func tapFavoriteButton(_ sender: UIButton) {
-        // ここから
         let point = sender.convert(CGPoint.zero, to: tableView)
         let indexPath = tableView.indexPathForRow(at: point)!
         let shop = shopArray[indexPath.row]
-        
         if shop.isFavorite {
             print("「\(shop.name)」をお気に入りから削除します")
             try! realm.write {
@@ -48,104 +52,73 @@ class ApiViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             }
         }
         tableView.reloadData()
-        // ここまで追加
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        
-        // ここから
         tableView.delegate = self
         tableView.dataSource = self
         
-        // APIキー読み込み
         let filePath = Bundle.main.path(forResource: "ApiKey", ofType:"plist" )
         let plist = NSDictionary(contentsOfFile: filePath!)!
         apiKey = plist["key"] as! String
-        
-        // shopArray読み込み
         updateShopArray()
-        // ここまで追加
         
-        // ここから
-        // RefreshControlの設定
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
-        // ここまで追加
-        
     }
-    
-    // ここから
     @objc func refresh() {
-        // shopArray再読み込み
         updateShopArray()
     }
-    // ここまで追加
-    
-    // ここから
-    func updateShopArray(appendLoad: Bool = false) {
-        // ここから
-        // 現在読み込み中なら読み込みを開始しない
+    func updateShopArray(keyword: String = "", appendLoad: Bool = false) {
         if isLoading {
             return
         }
-        // 最後まで読み込んでいるなら、追加読み込みしない
         if appendLoad && isLastLoaded {
             return
         }
-        // 読み込み開始位置を設定
         let startIndex: Int
         if appendLoad {
             startIndex = shopArray.count + 1
         } else {
             startIndex = 1
         }
-        // 読み込み中状態開始
         isLoading = true
-        // ここまで追加
-        
-        let parameters: [String: Any] = [
+        var parameters: [String: Any] = [
             "key": apiKey,
-            "start": startIndex,    // 開始位置の指定を変更
+            "start": startIndex,
             "count": 20,
             "keyword": "ランチ",
             "format": "json"
-        ]
-        print("APIリクエスト 開始位置: \(parameters["start"]!) 読み込み店舗数: \(parameters["count"]!)")    // 追加
+            ]
+            if !keyword.isEmpty {
+                parameters["keyword"] = keyword
+            }
+        print("APIリクエスト 開始位置: \(parameters["start"]!) 読み込み店舗数: \(parameters["count"]!)")
         AF.request("https://webservice.recruit.co.jp/hotpepper/gourmet/v1/", method: .get, parameters: parameters).responseDecodable(of: ApiResponse.self) { response in
-            self.isLoading = false  // 追加
-            // リフレッシュ表示動作停止
+            self.isLoading = false
             if self.tableView.refreshControl!.isRefreshing {
                 self.tableView.refreshControl!.endRefreshing()
             }
-            // レスポンス受信処理
             switch response.result {
             case .success(let apiResponse):
-                // ここから
-                // print("受信データ: \(apiResponse)")
                 print("受信店舗数: \(apiResponse.results.shop.count)")
                 if appendLoad {
-                    // 追加読み込みの場合は、現在のshopArrayに追加
                     self.shopArray += apiResponse.results.shop
                 } else {
-                    // 追加読み込みでない場合はそのまま代入し、isLastLoadedをリセット
                     self.shopArray = apiResponse.results.shop
                     self.isLastLoaded = false
                 }
-                // 読み込み数が0なら最後まで読み込まれたと判断
                 if apiResponse.results.shop.count == 0 {
                     self.isLastLoaded = true
                 }
-                // ここまで変更
-                
                 self.statusLabel.text = ""
             case .failure(let error):
                 print(error)
                 self.shopArray = []
-                self.isLastLoaded = true    // 追加
+                self.isLastLoaded = true
                 self.statusLabel.text = "データの取得が失敗しました"
             }
             self.tableView.reloadData()
@@ -162,34 +135,19 @@ class ApiViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let url = URL(string: shop.logo_image)!
         cell.logoImageView.af.setImage(withURL: url)
         cell.shopNameLabel.text = shop.name
-        cell.addressLabel.text = shop.address  //住所を追加
-        
-        // ここから
+        cell.addressLabel.text = shop.address
         let starImageName = shop.isFavorite ? "star.fill" : "star"
         let starImage = UIImage(systemName: starImageName)?.withRenderingMode(.alwaysOriginal)
         cell.favoriteButton.setImage(starImage, for: .normal)
-        // ここまで追加
-        // ここから
-        // 追加データの読み込みが必要か確認
         if shopArray.count - indexPath.row < 10 {
             self.updateShopArray(appendLoad: true)
         }
-        // ここまで追加
-        
-        
         return cell
-        
     }
-    // ここまで追加
-    
-    // ここから
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         tableView.reloadData()
     }
-    // ここまで追加
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         let shop = shopArray[indexPath.row]
@@ -204,17 +162,5 @@ class ApiViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         safariViewController.modalPresentationStyle = .pageSheet
         present(safariViewController, animated: true)
     }
-    
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

@@ -121,11 +121,17 @@
                                 <rect key="frame" x="240" y="82" width="56" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="検索"/>
+                                <connections>
+                                    <action selector="tapSearchButton:" destination="SIf-Fy-zVN" eventType="touchUpInside" id="OWN-Yq-BrV"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNB-mr-qhe">
                                 <rect key="frame" x="321" y="82" width="56" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="解除"/>
+                                <connections>
+                                    <action selector="tapResetButton:" destination="SIf-Fy-zVN" eventType="touchUpInside" id="8qB-Pf-344"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qRQ-Qw-0QM"/>
@@ -149,6 +155,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="keywordTextField" destination="elo-76-2lY" id="3sb-Nm-03O"/>
                         <outlet property="statusLabel" destination="lDt-po-Kpf" id="ywP-P7-sbg"/>
                         <outlet property="tableView" destination="4st-CN-kv1" id="ISh-y9-oHS"/>
                     </connections>
