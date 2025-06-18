@@ -14,16 +14,13 @@ struct ApiResponse: Decodable {
                 var pc: String
                 var sp: String
             }
-            
-            // ここから
-                       var isFavorite: Bool {
-                           if try! Realm().object(ofType: FavoriteShop.self, forPrimaryKey: self.id) != nil {
-                               return true
-                           } else {
-                               return false
-                           }
-                       }
-                       // ここまで追加
+            var isFavorite: Bool {
+                if try! Realm().object(ofType: FavoriteShop.self, forPrimaryKey: self.id) != nil {
+                    return true
+                } else {
+                    return false
+                }
+            }
             
         }
     }

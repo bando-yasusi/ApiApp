@@ -1,21 +1,18 @@
 import UIKit
-import RealmSwift       // 追加
-import AlamofireImage   // 追加
+import RealmSwift
+import AlamofireImage
 import SafariServices
 
-
 class FavoriteViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    // UITableViewDelegate, UITableViewDataSourc
+    
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    let realm = try! Realm()    // 追加
-    
-    var favoriteArray = try! Realm().objects(FavoriteShop.self) // 追加
+    let realm = try! Realm()
+    var favoriteArray = try! Realm().objects(FavoriteShop.self)
     
     @IBAction func tapFavoriteButton(_ sender: UIButton) {
         
-        // ここから
         let point = sender.convert(CGPoint.zero, to: tableView)
         let indexPath = tableView.indexPathForRow(at: point)!
         let favoriteShop = favoriteArray[indexPath.row]
@@ -35,28 +32,17 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
         alert.addAction(okAction)
-        
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
         alert.addAction(cancelAction)
-        
         present(alert, animated: true)
-        // ここまで追加
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        
-        // ここから
         tableView.delegate = self
         tableView.dataSource = self
-        // ここまで追加
-        
     }
-    // ここから
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         tableView.reloadData()
         if favoriteArray.count == 0 {
             statusLabel.text = "お気に入りはまだ登録されていません"
@@ -64,11 +50,9 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
             statusLabel.text = ""
         }
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return favoriteArray.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ShopCell
         let favoriteShop = favoriteArray[indexPath.row]
@@ -76,11 +60,8 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         cell.logoImageView.af.setImage(withURL: url)
         cell.shopNameLabel.text = favoriteShop.name
         cell.addressLabel.text = favoriteShop.address
-        
-        
         return cell
     }
-    // ここまで追加
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         let favoriteShop = favoriteArray[indexPath.row]
@@ -89,16 +70,4 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         safariViewController.modalPresentationStyle = .pageSheet
         present(safariViewController, animated: true)
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

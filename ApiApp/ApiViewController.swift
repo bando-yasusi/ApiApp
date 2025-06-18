@@ -92,10 +92,10 @@ class ApiViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             "count": 20,
             "keyword": "ランチ",
             "format": "json"
-            ]
-            if !keyword.isEmpty {
-                parameters["keyword"] = keyword
-            }
+        ]
+        if !keyword.isEmpty {
+            parameters["keyword"] = keyword
+        }
         print("APIリクエスト 開始位置: \(parameters["start"]!) 読み込み店舗数: \(parameters["count"]!)")
         AF.request("https://webservice.recruit.co.jp/hotpepper/gourmet/v1/", method: .get, parameters: parameters).responseDecodable(of: ApiResponse.self) { response in
             self.isLoading = false
